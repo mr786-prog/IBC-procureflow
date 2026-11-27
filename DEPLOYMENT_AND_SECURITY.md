@@ -50,29 +50,25 @@ This document provides a complete technical audit, configuration reference, and 
 
 ## 3. Render Deployment & Secret Keys Setup
 
-Deploy ProcureFlow to Render as a **Web Service**:
+Deploy ProcureFlow to Render as a **Web Service** using the included [`render.yaml`](render.yaml) Blueprint:
 
 ### Service Settings
-- **Environment**: Python 3
-- **Root Directory**: `.` (leave default)
+- **Environment**: Python
+- **Plan**: Starter
 - **Build Command**: `pip install -r requirements.txt`
 - **Start Command**: `uvicorn procureflow.app.main:app --host 0.0.0.0 --port $PORT`
 - **Health Check Path**: `/health`
 
-### Environment Secret Keys (Render Dashboard → Environment)
-Input the following secrets in Render:
+When creating the Blueprint service, Render prompts for the `sync: false` values below. The Blueprint sets production mode, secure cookies, and disables demo mode.
 
 | Key | Description | Example Value |
 |---|---|---|
-| `APP_ENV` | Must be production | `production` |
-| `APP_BASE_URL` | Public HTTPS URL on Render | `https://ibc-procureflow.onrender.com` |
-| `SESSION_COOKIE_SECURE` | Enforces HTTPS-only cookies | `true` |
-| `DEMO_MODE` | Must remain false in cloud | `false` |
 | `SUPABASE_DB_URL` | Primary Supabase PostgreSQL connection string | `postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres` |
-| `BOOTSTRAP_MANAGER_EMAIL` | **Your manager email** | `manager@ibcbolts.com` |
-| `BOOTSTRAP_MANAGER_PASSWORD` | **Your secure initial password** | `AStrongSecretPassword123#` |
+| `BOOTSTRAP_MANAGER_EMAIL` | **Your manager email** | `indbolt@gmail.com` |
+| `BOOTSTRAP_MANAGER_PASSWORD` | **Your secure initial password** | `Indbolt@123` |
 
 *(Note: The system also recognizes `INITIAL_MANAGER_EMAIL` / `MANAGER_EMAIL` as aliases).*
+Render's `RENDER_EXTERNAL_URL` is used as `APP_BASE_URL` by default. If you use a custom domain or need to override it, set `APP_BASE_URL` in the Render service environment. Register the resulting HTTPS OAuth callback URLs with Google or Zoho if those integrations are enabled.
 
 ### What happens on first boot on Render:
 1. ProcureFlow connects to Supabase PostgreSQL using TLS.
@@ -108,9 +104,14 @@ Input the following secrets in Render:
 When the bootstrap manager signs in for the first time:
 
 1. **Initial Login**:
-   - Navigate to `/login`.
-   - Enter `BOOTSTRAP_MANAGER_EMAIL` and `BOOTSTRAP_MANAGER_PASSWORD` configured in Render secret keys (or `.env`).
-   - The system automatically authenticates, grants manager access, and redirects to `/app/manager/`.
+   - **Via Google OAuth (Recommended)**:
+     - On the login page (`/login`), click **"Sign in with Google"**.
+     - Sign in with **`indbolt@gmail.com`**.
+     - Because `indbolt@gmail.com` is configured as the main manager, Google returns your verified identity, ProcureFlow assigns full Manager privileges, imports your Google name, and redirects you directly to the **Manager Console** (`/app/manager/`).
+   - **Via Email & Password**:
+     - Navigate to `/login`.
+     - Enter email `indbolt@gmail.com` and password `Indbolt@123` (or whatever password you set in Render secret keys).
+     - The system authenticates, grants manager access, and redirects to `/app/manager/`.
 
 2. **Editing Profile Details (Name & Phone)**:
    - Navigate to **⚙️ Settings** from the sidebar or click your user name in the top right header.

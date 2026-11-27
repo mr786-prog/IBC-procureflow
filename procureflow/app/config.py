@@ -68,7 +68,10 @@ class Settings(BaseModel):
     # Core
     APP_NAME: str = "IBC ProcureFlow"
     APP_ENV:  str = os.getenv("APP_ENV", "local")
-    APP_BASE_URL: str = os.getenv("APP_BASE_URL", "http://localhost:8000")
+    APP_BASE_URL: str = os.getenv(
+        "APP_BASE_URL",
+        os.getenv("RENDER_EXTERNAL_URL", "http://localhost:8000"),
+    )
 
     # Database
     DATABASE_URL: str = os.getenv(

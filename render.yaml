@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: ibc-procureflow
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn procureflow.app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: PYTHON_VERSION
+        value: 3.11.11
+      - key: SESSION_COOKIE_SECURE
+        value: "true"
+      - key: DEMO_MODE
+        value: "false"
+      - key: SUPABASE_DB_URL
+        sync: false
+      - key: BOOTSTRAP_MANAGER_EMAIL
+        sync: false
+      - key: BOOTSTRAP_MANAGER_PASSWORD
+        sync: false
