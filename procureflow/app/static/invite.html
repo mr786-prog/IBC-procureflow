@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>Set up your ProcureFlow account</title>
+  <style>
+    body { font: 16px system-ui, sans-serif; background: radial-gradient(circle at 50% 20%, #27272a 0%, #121316 100%); color: #0f172a; margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    main { width: 100%; max-width: 440px; margin: 20px auto; padding: 32px; background: white; border-radius: 12px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.65); text-align: left; }
+    .invite-logo { text-align: center; margin-bottom: 20px; }
+    .invite-logo img { max-width: 200px; height: auto; }
+    label { display: block; margin: 16px 0 6px; font-weight: 600; font-size: 14px; }
+    input { width: 100%; box-sizing: border-box; padding: 11px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; }
+    input:focus { outline: none; border-color: #fd6c1d; box-shadow: 0 0 0 3px rgba(253, 108, 29, 0.2); }
+    button { margin-top: 20px; width: 100%; padding: 12px; color: white; background: #fd6c1d; border: 0; border-radius: 6px; font-weight: 700; cursor: pointer; transition: background 0.15s; }
+    button:hover { background: #e55a0f; }
+    #message { margin-top: 14px; color: #b91c1c; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="invite-logo">
+      <img src="/static/shared/img/ibc-logo.jpeg" alt="IBC - Industrial Bolt Centre">
+    </div>
+    <h1 style="font-size: 1.35rem; margin-top: 0;">Set up your account</h1>
+    <p style="color: #64748b; font-size: 14px;">Choose a secure password with at least 12 characters for your IBC ProcureFlow account.</p>
+    <form id="setup-form">
+      <label for="password">New password</label>
+      <input id="password" type="password" minlength="12" maxlength="256" autocomplete="new-password" required>
+      <label for="confirm">Confirm password</label>
+      <input id="confirm" type="password" minlength="12" maxlength="256" autocomplete="new-password" required>
+      <button type="submit">Create account</button>
+    </form>
+    <div id="message" role="alert"></div>
+  </main>
+  <script>
+    const inviteToken = new URLSearchParams(location.hash.slice(1)).get("token") || "";
+    history.replaceState(null, "", location.pathname);
+    document.getElementById("setup-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const message = document.getElementById("message");
+      const password = document.getElementById("password").value;
+      if (password !== document.getElementById("confirm").value) {
+        message.textContent = "Passwords do not match.";
+        return;
+      }
+      try {
+        const response = await fetch("/api/v1/auth/accept-invitation", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token: inviteToken, password })
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.detail || "Invitation could not be accepted.");
+        location.replace(result.redirect_url);
+      } catch (error) {
+        message.textContent = error.message;
+      }
+    });
+  </script>
+</body>
+</html>

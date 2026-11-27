@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Workspace — IBC ProcureFlow</title>
+  <link rel="stylesheet" href="/static/shared/css/tokens.css">
+  <link rel="stylesheet" href="/static/shared/css/base.css">
+  <link rel="stylesheet" href="/static/shared/css/components.css">
+  <link rel="stylesheet" href="/static/shared/css/layout.css">
+  <style>
+    .requisition-item-row {
+      display: grid;
+      grid-template-columns: 3fr 1fr 1fr 2fr auto;
+      gap: 10px;
+      align-items: flex-end;
+      padding: 10px;
+      background: #f8fafc;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <img src="/static/shared/img/ibc-logo.jpeg" alt="IBC Logo" class="brand-logo-img">
+        <div>
+          <div class="brand-title">ProcureFlow</div>
+          <div class="brand-sub">Employee Workspace</div>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-item active" data-page="dashboard">🏠 My Dashboard</div>
+        <div class="nav-item" data-page="new-requisition">➕ New Requisition</div>
+        <div class="nav-item" data-page="my-requisitions">📋 My Requisitions</div>
+        <div class="nav-item" data-page="enquiries">💬 Enquiries</div>
+        <div class="nav-item" data-page="pos">📦 Purchase Orders</div>
+        <div class="nav-item" data-page="grns">🚚 Goods Receipts</div>
+        <div class="nav-item" data-page="lrs">Lorry Receipts (LR)</div>
+        <div class="nav-item" data-page="catalogue">🔍 Item Catalogue</div>
+        <div class="nav-item" data-page="notifications">🔔 Notifications <span id="badge-emp-notif" class="badge badge-pending_approval" style="margin-left:auto; display:none;">0</span></div>
+        <div class="nav-item" data-page="profile">👤 My Profile</div>
+      </nav>
+      <div style="padding: 14px 16px; border-top: 1px solid #27272a; font-size: 11px; color: #a1a1aa; background: #121316;">
+        <div style="font-weight: 600; color: #f4f4f5;">Industrial Bolt Centre</div>
+        <div style="font-size: 10px; color: #fd6c1d;">Fastening Solutions Since 1992</div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="top-bar">
+        <h2 id="current-page-title" style="font-size: 1.15rem; font-weight: 700;">My Dashboard</h2>
+        <div class="user-profile-menu">
+          <div style="display:flex; flex-direction:column; text-align:right;">
+            <span id="header-emp-name" style="font-weight:700; font-size:0.875rem;">Loading...</span>
+            <span id="header-emp-dept" style="font-size:0.75rem; color:var(--color-text-muted);">Employee</span>
+          </div>
+          <button id="btn-logout" class="btn btn-secondary btn-sm">Sign Out</button>
+        </div>
+      </header>
+
+      <div class="content-body" id="page-container">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Shared Modal Shell -->
+  <div class="modal-overlay" id="app-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="modal-title">Modal</h3>
+        <button class="btn btn-secondary btn-sm" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body" id="modal-content"></div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script type="module" src="/static/employee/app.js?v=downloads-20261126"></script>
+</body>
+</html>

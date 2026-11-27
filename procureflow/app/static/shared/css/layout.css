@@ -1,0 +1,173 @@
+/* ============================================================
+ * Layout — Top-bar + Left Sidebar + Main Content
+ * IBC ProcureFlow — shared app shell styles
+ * ============================================================ */
+
+/* ---- App shell ---- */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ---- Sidebar ---- */
+.sidebar {
+  width: 240px;
+  min-width: 240px;
+  max-width: 240px;
+  background-color: #18181b;
+  color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  border-right: 1px solid #27272a;
+  overflow-x: hidden;
+}
+
+/* Sidebar brand / logo area */
+.sidebar-brand {
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #27272a;
+  background: #121316;
+  overflow: hidden;
+  min-height: 56px;
+}
+
+/* Logo image — constrained so it never dominates the sidebar */
+.brand-logo-img {
+  height: 28px;        /* Fixed height — stays compact */
+  max-height: 28px;
+  max-width: 80px;     /* Caps wide logos */
+  width: auto;
+  object-fit: contain;
+  background: #ffffff;
+  padding: 2px 5px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  flex-shrink: 0;
+}
+
+/* Fallback icon badge when no logo image is used */
+.brand-icon {
+  width: 32px;
+  height: 32px;
+  background: var(--color-primary);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: #fff;
+  font-size: 15px;
+  box-shadow: 0 2px 6px rgba(253, 108, 29, 0.4);
+  flex-shrink: 0;
+}
+
+.brand-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+}
+
+.brand-sub {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  color: #fd6c1d;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-top: 1px;
+}
+
+/* ---- Sidebar navigation ---- */
+.sidebar-nav {
+  padding: var(--space-sm) 0;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px;
+  color: #cbd5e1;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  user-select: none;
+}
+
+.nav-item:hover {
+  background-color: #27272a;
+  color: #ffffff;
+}
+
+.nav-item.active {
+  background-color: #27272a;
+  color: #ffffff;
+  border-left-color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* ---- Main content area ---- */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg);
+  overflow-x: hidden;
+  min-width: 0; /* Prevent flex overflow */
+}
+
+/* ---- Top bar ---- */
+.top-bar {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  height: 56px;
+  padding: 0 var(--space-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.user-profile-menu {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ---- Scrollable content body ---- */
+.content-body {
+  padding: var(--space-lg);
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* ---- Page header (title + action button row) ---- */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.page-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1.25;
+}

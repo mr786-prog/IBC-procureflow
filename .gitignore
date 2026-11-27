@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+backups/
+procureflow.db
+procureflow.db-shm
+procureflow.db-wal
+__pycache__/
+*.py[cod]
+*.tmp
+*.sqlite3*
+.DS_Store
+Thumbs.db
